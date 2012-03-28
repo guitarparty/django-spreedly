@@ -13,7 +13,7 @@ import spreedly.settings as spreedly_settings
 
 class PlanManager(models.Manager):
     def enabled(self):
-        return self.model.objects.filter(enabled=True)
+        return self.model.objects.filter(enabled=True, force_recurring=True)
 
 
 class Plan(models.Model):
@@ -55,7 +55,7 @@ class Plan(models.Model):
         ordering = ['order', 'price']
     
     def __unicode__(self):
-        return self.name
+        return '%s: $%s/%s' % (self.name, self.price, self.terms)
     
     def save(self, *args, **kwargs):
         # order the items logically
@@ -103,6 +103,9 @@ class Subscription(models.Model):
     
     card_expires_before_next_auto_renew = models.BooleanField(default=False)
     
+    store_credit = models.DecimalField(max_digits=6, decimal_places=2, default='0',
+        help_text=u'USD', null=True)
+    
     objects = SubscriptionManager()
     
     def __unicode__(self):
@@ -121,8 +124,14 @@ class Subscription(models.Model):
     @property
     def subscription_active(self):
         '''gets the status based on current active status and active_until'''
-        if self.active and (self.active_until > datetime.today() or active_until == None):
-            return True
+        if self.active:
+            if self.active_until:
+                if self.active_until > datetime.now():
+                    return True
+                elif self.lifetime:
+                    return True
+            elif self.lifetime:
+                return True        
         return False
         
         
