@@ -18,7 +18,7 @@ class SpreedlyMiddleware(object):
                     allowed = True
             
         elif spreedly_settings.SPREEDLY_LOCK_TYPE == 'blacklist':
-            allowed = True:
+            allowed = True
             for path in spreedly_settings.SPREEDLY_BLOCKED_PATHS + [spreedly_settings.SPREEDLY_URL, settings.LOGIN_URL]:
                 if request.path.startswith(path):
                     allowed = False
