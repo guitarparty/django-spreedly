@@ -14,5 +14,5 @@ def existing_plan_url(user):
     }
 
 @register.simple_tag
-def new_plan_url(plan, user, return_url):
+def new_plan_url(plan, user):
     return subscription_url(plan, user, return_url)
