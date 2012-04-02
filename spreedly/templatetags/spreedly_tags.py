@@ -6,7 +6,7 @@ from spreedly.functions import subscription_url, return_url
 register = template.Library()
 
 @register.simple_tag
-def existing_plan_url(user, return_url):
+def existing_plan_url(user):
     return 'https://spreedly.com/%(site_name)s/subscriber_accounts/%(user_token)s/?return_url=%(return_url)s' % {
         'site_name': settings.SPREEDLY_SITE_NAME,
         'user_token': user.subscription.token,
