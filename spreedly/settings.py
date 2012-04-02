@@ -16,8 +16,13 @@ SPREEDLY_RETURN_TEMPLATE = getattr(settings, 'SPREEDLY_RETURN_TEMPLATE', 'thanks
 # lock out your entire site (except for spreedly URLs and the paths below) to non-subscribed users?
 SPREEDLY_USERS_ONLY = getattr(settings, 'SPREEDLY_USERS_ONLY', False)
 
+SPREEDLY_LOCK_TYPE = getattr(settings, 'SPREEDLY_ALLOWED_PATHS', 'whitelist')
+
 # Paths that a user can visit without a subscription 
 SPREEDLY_ALLOWED_PATHS = getattr(settings, 'SPREEDLY_ALLOWED_PATHS', [])
+
+# Paths that a user can visit without a subscription 
+SPREEDLY_BLOCKED_PATHS = getattr(settings, 'SPREEDLY_BLOCKED_PATHS', [])
 
 # Should anonymous users be sent to the login screen or the subscription screen?
 SPREEDLY_ANONYMOUS_SHOULD_LOGIN = getattr(settings, 'SPREEDLY_ANONYMOUS_SHOULD_LOGIN', True)

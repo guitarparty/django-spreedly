@@ -11,11 +11,18 @@ class SpreedlyMiddleware(object):
     subscription.
     '''
     def process_request(self, request):
-        allowed = False
-        for path in spreedly_settings.SPREEDLY_ALLOWED_PATHS + [spreedly_settings.SPREEDLY_URL, settings.LOGIN_URL]:
-            if request.path.startswith(path):
-                allowed = True
-        
+        if spreedly_settings.SPREEDLY_LOCK_TYPE == 'whitelist':
+            allowed = False
+            for path in spreedly_settings.SPREEDLY_ALLOWED_PATHS + [spreedly_settings.SPREEDLY_URL, settings.LOGIN_URL]:
+                if request.path.startswith(path):
+                    allowed = True
+            
+        elif spreedly_settings.SPREEDLY_LOCK_TYPE == 'blacklist':
+            allowed = True:
+            for path in spreedly_settings.SPREEDLY_BLOCKED_PATHS + [spreedly_settings.SPREEDLY_URL, settings.LOGIN_URL]:
+                if request.path.startswith(path):
+                    allowed = False
+
         if not allowed:
             if not request.user.is_authenticated():
                 if spreedly_settings.SPREEDLY_USERS_ONLY:
