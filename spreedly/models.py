@@ -25,8 +25,8 @@ class Plan(models.Model):
     terms = models.CharField(max_length=100, blank=True)
     
     plan_type = models.CharField(max_length=10, blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2, default='0',
-        help_text=u'USD', null=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default='0', null=True)
+    currency_code = models.CharField(max_length=10, blank=True)
     
     enabled = models.BooleanField(default=False)
     force_recurring = models.BooleanField(default=False)
@@ -133,6 +133,10 @@ class Subscription(models.Model):
             elif self.lifetime:
                 return True        
         return False
+
+    def stop_auto_renew(self):
+        client.stop_auto_renew(self.user.id)
+
         
         
 class Gift(models.Model):

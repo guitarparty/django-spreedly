@@ -14,15 +14,7 @@
 			{% endif %}
 		</h2>
 
-		{% if request.user.is_authenticated %}
-			<h3>
-				{% if current_user_subscription.lifetime %}
-					You have a lifetime subscription! You'll never have to pay or update :)
-				{% else %}
-					<a href="{% existing_plan_url user %}">Change or update your subscription settings</a>
-				{% endif %}
-			</h3>
-		{% endif %}
+
 
 
 		{% if plans %}

@@ -10,9 +10,9 @@ def existing_plan_url(user):
     return 'https://spreedly.com/%(site_name)s/subscriber_accounts/%(user_token)s/?return_url=%(return_url)s' % {
         'site_name': settings.SPREEDLY_SITE_NAME,
         'user_token': user.subscription.token,
-        'return_url': return_url
+        'return_url': return_url(user)
     }
 
 @register.simple_tag
 def new_plan_url(plan, user):
-    return subscription_url(plan, user, return_url)
+    return subscription_url(plan, user, return_url(user, plan))

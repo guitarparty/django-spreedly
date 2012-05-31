@@ -70,6 +70,7 @@ class Client:
                 'date_changed': datetime.strptime(
                     plan.findtext('updated-at'), '%Y-%m-%dT%H:%M:%SZ'
                 ),
+                'currency_code': plan.findtext('currency-code'),
             }
             result.append(data)
         return result

@@ -98,8 +98,11 @@ def stop_auto_renew(user):
     client.stop_auto_renew(user.id)
     return get_subscription(user)
 
-def return_url(plan, user, trial=False):
-    url = 'http://%s%s' % (Site.objects.get(id=settings.SITE_ID), reverse('spreedly_return', args=[user.id, plan.pk]))
+def return_url(user, plan=None, trial=False):
+    args = [user.id]
+    if plan:
+        args.append(plan.pk)
+    url = 'http://%s%s' % (Site.objects.get(id=settings.SITE_ID), reverse('spreedly_return', args=args))
     if trial:
         url = url + '?trial=true'
     return url
@@ -113,5 +116,5 @@ def subscription_url(plan, user, return_url):
         'user_email': user.email,
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'return_url': return_url
+        'return_url': return_url,
     }
