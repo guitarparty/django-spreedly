@@ -22,8 +22,6 @@ class SpreedlyMiddleware(object):
             for path in spreedly_settings.SPREEDLY_BLOCKED_PATHS:
                 if request.path.startswith(path):
                     allowed = False
-        print "==============", spreedly_settings.SPREEDLY_LOCK_TYPE
-        print "allowed ", allowed
         if not allowed:
             if not request.user.is_authenticated():
                 if spreedly_settings.SPREEDLY_USERS_ONLY:
