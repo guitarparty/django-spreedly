@@ -450,7 +450,12 @@ class Client:
 
     def allow_free_trial(self, subscriber_id):
         self.set_url('subscribers/%d/allow_free_trial.xml' % subscriber_id)
-        self.query()
+        data = '''
+            <subscriber>
+                <customer-id>%d</customer-id>
+            </subscriber>
+        ''' % (subscriber_id)
+        self.query(data)
         return self.get_response()
     
     def get_or_create_subscriber(self, subscriber_id, screen_name):
