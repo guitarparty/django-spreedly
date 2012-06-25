@@ -107,6 +107,11 @@ def return_url(user, plan=None, trial=False):
         url = url + '?trial=true'
     return url
 
+def allow_free_trial(user):
+    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
+    client.allow_free_trial(user.id)
+    return get_subscription(user)
+
 def subscription_url(plan, user, return_url):
     return 'https://spreedly.com/%(site_name)s/subscribers/%(user_id)s/subscribe/%(plan_id)s/%(user_username)s?email=%(user_email)s&return_url=%(return_url)s&first_name=%(first_name)s&last_name=%(last_name)s' % {
         'site_name': settings.SPREEDLY_SITE_NAME,
