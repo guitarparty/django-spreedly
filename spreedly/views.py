@@ -179,7 +179,7 @@ def spreedly_listener(request):
                     # Now let's query Spreedly API for the actual changes
                     data = client.get_info(int(id))
                     subscription, created = Subscription.objects.get_or_create(
-                        user__pk=id
+                        user=User.objects.get(pk=id)
                     )
                     for k, v in data.items():
                         if hasattr(subscription, k):
