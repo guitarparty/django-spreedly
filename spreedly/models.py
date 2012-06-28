@@ -137,6 +137,12 @@ class Subscription(models.Model):
     def stop_auto_renew(self):
         client.stop_auto_renew(self.user.id)
 
+    def subscription_change_url(self):
+        return 'https://spreedly.com/%(account_name)s/subscriber_accounts/%(token)s' % {
+            'account_name': settings.SPREEDLY_SITE_NAME,
+            'token': self.token,
+        }
+
         
         
 class Gift(models.Model):
