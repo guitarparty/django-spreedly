@@ -176,6 +176,8 @@ def spreedly_listener(request):
             if len(subscriber_ids):
                 client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
                 for id in subscriber_ids:
+                    cache_key = 'spreedly-subscription-%d' % user.id
+                    cache.delete(cache_key)
                     # Now let's query Spreedly API for the actual changes
                     data = client.get_info(int(id))
                     subscription, created = Subscription.objects.get_or_create(
@@ -185,5 +187,6 @@ def spreedly_listener(request):
                         if hasattr(subscription, k):
                             setattr(subscription, k, v)
                     subscription.save()
+                    cache.set(cache_key, subscription, 60 * 60)
                 return HttpResponse("OK")
     raise Http404

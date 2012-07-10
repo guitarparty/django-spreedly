@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
+from django.core.cache import cache
 
 from spreedly.models import Plan, Subscription
 from spreedly.pyspreedly.api import Client
@@ -23,16 +24,23 @@ def sync_plans():
             p.save()
 
 def get_subscription(user):
-    client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
-    data = client.get_info(user.id)
+    cache_key = 'spreedly-subscription-%d' % user.id
+
+    subscription = cache.get(cache_key)
+
+    if not subscription:
+        client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
+        data = client.get_info(user.id)
     
-    subscription, created = Subscription.objects.get_or_create(
-        user=user
-    )
-    for k, v in data.items():
-        if hasattr(subscription, k):
-            setattr(subscription, k, v)
-    subscription.save()
+        subscription, created = Subscription.objects.get_or_create(
+            user=user
+        )
+        for k, v in data.items():
+            if hasattr(subscription, k):
+                setattr(subscription, k, v)
+        subscription.save()
+        cache.set(cache_key, subscription, 60 * 60)
+
     return subscription
     
 def create_subscription(user):
