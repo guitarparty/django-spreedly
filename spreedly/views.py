@@ -176,7 +176,7 @@ def spreedly_listener(request):
             if len(subscriber_ids):
                 client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
                 for id in subscriber_ids:
-                    cache_key = 'spreedly-subscription-%d' % user.id
+                    cache_key = 'spreedly-subscription-%d' % id
                     cache.delete(cache_key)
                     # Now let's query Spreedly API for the actual changes
                     data = client.get_info(int(id))
