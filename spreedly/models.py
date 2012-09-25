@@ -103,7 +103,7 @@ class Subscription(models.Model):
     
     card_expires_before_next_auto_renew = models.BooleanField(default=False)
     
-    store_credit = models.DecimalField(max_digits=6, decimal_places=2, default='0',
+    store_credit = models.DecimalField(max_digits=8, decimal_places=2, default='0',
         help_text=u'USD', null=True)
     
     objects = SubscriptionManager()
