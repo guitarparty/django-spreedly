@@ -50,7 +50,7 @@ def create_subscription(user):
     
 def subscribe(plan, user):
     client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
-    client.subscribe(user.id, plan.id)
+    client.subscribe(user.id, plan.pk)
     return get_subscription(user)
     
 def get_or_create_subscription(user):
