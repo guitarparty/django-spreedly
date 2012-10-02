@@ -48,9 +48,9 @@ def create_subscription(user):
     client.get_or_create_subscriber(user.id, user.username)
     return get_subscription(user)
     
-def subscribe(plan, user):
+def change_subscription(plan, user):
     client = Client(settings.SPREEDLY_AUTH_TOKEN_SECRET, settings.SPREEDLY_SITE_NAME)
-    client.subscribe(user.id, plan.pk)
+    client.change_subscription(user.id, plan.pk)
     return get_subscription(user)
     
 def get_or_create_subscription(user):

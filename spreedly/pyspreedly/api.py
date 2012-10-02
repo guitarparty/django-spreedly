@@ -143,6 +143,24 @@ class Client:
             return response.status
         return
     
+    def change_subscription(self, subscriber_id, plan_id):
+        '''
+        Subscribe a user to some plan
+        '''
+        data = '<subscription_plan><id>%d</id></subscription_plan>' % plan_id
+        
+
+        headers = {'Authorization': 'Basic %s' % self.auth}
+        conn = httplib.HTTPSConnection(self.base_host)
+        conn.request(
+            'PUT', '%s/subscribers/%d/change_subscription_plan.xml' % (self.base_path, subscriber_id),
+            data,
+            headers
+        )
+        response = conn.getresponse()
+        return response.status
+
+
     def subscribe(self, subscriber_id, plan_id, trial=False):
         '''
         Subscribe a user to some plan
@@ -151,8 +169,6 @@ class Client:
         
         if trial:
             self.set_url('subscribers/%d/subscribe_to_free_trial.xml' % subscriber_id)
-        else:
-            self.set_url('subscribers/%d/change_subscription_plan.xml' % subscriber_id)
 
         self.query(data)
         
