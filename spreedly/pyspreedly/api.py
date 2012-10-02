@@ -151,7 +151,9 @@ class Client:
         
         if trial:
             self.set_url('subscribers/%d/subscribe_to_free_trial.xml' % subscriber_id)
-        
+        else:
+            self.set_url('subscribers/%d/change_subscription_plan.xml' % subscriber_id)
+
         self.query(data)
         
         # Parse
