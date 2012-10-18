@@ -119,7 +119,11 @@ class Subscription(models.Model):
     
     @property
     def ending_this_month(self):
-        return datetime.today() <= self.active_until <= datetime.today() + timedelta(days=30)
+        if self.lifetime:
+            return False
+        if self.active_until:
+            return datetime.today() <= self.active_until <= datetime.today() + timedelta(days=30)
+        return False
     
     @property
     def subscription_active(self):
