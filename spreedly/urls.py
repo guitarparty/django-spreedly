@@ -11,4 +11,5 @@ urlpatterns = patterns('spreedly.views',
     url(r'^%s(?P<user_id>\d+)/$' % spreedly_settings.SPREEDLY_RETURN_URL[1:], 'spreedly_return', name='spreedly_return'),
     url(r'^%s(?P<user_id>\d+)/(?P<plan_pk>\w+)/$' % spreedly_settings.SPREEDLY_RETURN_URL[1:], 'spreedly_return', name='spreedly_return'),
     url(r'^my_subscription/$', 'my_subscription', name='my_subscription'),
+    url(r'^set_site/$', 'set_site', name='set_site'),
 )
