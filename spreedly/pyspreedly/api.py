@@ -125,6 +125,8 @@ class Client:
                 'active_until': datetime.strptime(
                     plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
                 ) if plan.findtext('active-until') else None,
+                'on_trial': True if plan.findtext('on-trial') == 'true' \
+                    else False,
             }
             
             result.append(data)
@@ -208,6 +210,8 @@ class Client:
                 'active_until': datetime.strptime(
                     plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
                 ) if plan.findtext('active-until') else None,
+                'on_trial': True if plan.findtext('on-trial') == 'true' \
+                    else False,
             }
             result.append(data)
         return result[0]
@@ -263,6 +267,8 @@ class Client:
                 'active_until': datetime.strptime(
                     plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
                 ) if plan.findtext('active-until') else None,
+                'on_trial': True if plan.findtext('on-trial') == 'true' \
+                    else False,
             }
 
             result.append(data)
@@ -317,6 +323,8 @@ class Client:
                 'active_until': datetime.strptime(
                     plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
                 ) if plan.findtext('active-until') else None,
+                'on_trial': True if plan.findtext('on-trial') == 'true' \
+                    else False,
             }
 
             result.append(data)
@@ -372,6 +380,8 @@ class Client:
                 'active_until': datetime.strptime(
                     plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
                 ) if plan.findtext('active-until') else None,
+                'on_trial': True if plan.findtext('on-trial') == 'true' \
+                    else False,
             }
 
             result.append(data)
@@ -450,6 +460,8 @@ class Client:
                 'active_until': datetime.strptime(
                     plan.findtext('active-until'), '%Y-%m-%dT%H:%M:%SZ'
                 ) if plan.findtext('active-until') else None,
+                'on_trial': True if plan.findtext('on-trial') == 'true' \
+                    else False,
             }
             result.append(data)
         return result[0]
