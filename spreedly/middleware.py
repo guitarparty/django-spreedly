@@ -16,16 +16,13 @@ class SpreedlyMiddleware(object):
         if hasattr(request, 'session'):
             spreedly_site = request.session.get('spreedly_site', None)
             if spreedly_site in settings.SPREEDLY_SITES.keys() and spreedly_site is not None:
-                print "FROM SESSION"
                 request.spreedly_site = spreedly_site
         else:
             spreedly_site = request.COOKIES.get('spreedly_site')
             if spreedly_site in settings.SPREEDLY_SITES.keys() and spreedly_site is not None:
-                print "FROM COOKIE"
                 request.spreedly_site = spreedly_site
 
         if spreedly_site is None:
-            print "FROM DEFUALT"
             request.spreedly_site = sites.DEFAULT_SITE_ALIAS
 
         print request.spreedly_site

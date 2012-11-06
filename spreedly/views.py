@@ -191,30 +191,3 @@ def spreedly_listener(request):
                     cache.set(cache_key, subscription, 60 * 60)
                 return HttpResponse("OK")
     raise Http404
-
-@csrf_exempt
-def set_site(request):
-    """
-    Redirect to a given url while setting the chosen site in the
-    session or cookie. The site name needs to be 
-    specified in the request parameters.
-    """
-
-    next = request.REQUEST.get('next', None)
-    if not next:
-        next = request.META.get('HTTP_REFERER', None)
-    if not next:
-        next = '/'
-    response = HttpResponseRedirect(next)
-    if request.method == 'POST':
-        spreedly_site = request.POST.get('spreedly_site', None)
-        print "Blah", spreedly_site
-        if spreedly_site:
-            if spreedly_site not in settings.SPREEDLY_SITES.keys():
-                spreedly_site = sites.DEFAULT_SITE_ALIAS
-            if hasattr(request, 'session'):
-                request.session['spreedly_site'] = spreedly_site
-                print request.session['spreedly_site']
-            else:
-                response.set_cookie('spreedly_site', spreedly_site)
-    return response
