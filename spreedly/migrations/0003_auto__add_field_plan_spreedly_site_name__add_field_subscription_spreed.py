@@ -8,72 +8,20 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Plan'
-        db.create_table('spreedly_plan', (
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=64, null=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('terms', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('plan_type', self.gf('django.db.models.fields.CharField')(max_length=10, blank=True)),
-            ('price', self.gf('django.db.models.fields.DecimalField')(default='0', null=True, max_digits=8, decimal_places=2)),
-            ('currency_code', self.gf('django.db.models.fields.CharField')(max_length=10, blank=True)),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('force_recurring', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('force_renew', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('duration', self.gf('django.db.models.fields.IntegerField')(default=0, blank=True)),
-            ('duration_units', self.gf('django.db.models.fields.CharField')(max_length=10, blank=True)),
-            ('feature_level', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('return_url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('date_changed', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('version', self.gf('django.db.models.fields.IntegerField')(default=1, blank=True)),
-            ('speedly_id', self.gf('django.db.models.fields.IntegerField')(primary_key=True, db_index=True)),
-            ('speedly_site_id', self.gf('django.db.models.fields.IntegerField')(null=True, db_index=True)),
-            ('order', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
-        ))
-        db.send_create_signal('spreedly', ['Plan'])
+        # Adding field 'Plan.spreedly_site_name'
+        db.add_column('spreedly_plan', 'spreedly_site_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True), keep_default=False)
 
-        # Adding model 'Subscription'
-        db.create_table('spreedly_subscription', (
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True, primary_key=True)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('feature_level', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('active_until', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('token', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('trial_elegible', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('lifetime', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('recurring', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('card_expires_before_next_auto_renew', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('store_credit', self.gf('django.db.models.fields.DecimalField')(default='0', null=True, max_digits=8, decimal_places=2)),
-        ))
-        db.send_create_signal('spreedly', ['Subscription'])
-
-        # Adding model 'Gift'
-        db.create_table('spreedly_gift', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('uuid', self.gf('django.db.models.fields.CharField')(unique=True, max_length=32, db_index=True)),
-            ('from_user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='gifts_sent', to=orm['auth.User'])),
-            ('to_user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='gifts_received', to=orm['auth.User'])),
-            ('plan_name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('message', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('created_at', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('sent_at', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('spreedly', ['Gift'])
+        # Adding field 'Subscription.spreedly_site_name'
+        db.add_column('spreedly_subscription', 'spreedly_site_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Plan'
-        db.delete_table('spreedly_plan')
+        # Deleting field 'Plan.spreedly_site_name'
+        db.delete_column('spreedly_plan', 'spreedly_site_name')
 
-        # Deleting model 'Subscription'
-        db.delete_table('spreedly_subscription')
-
-        # Deleting model 'Gift'
-        db.delete_table('spreedly_gift')
+        # Deleting field 'Subscription.spreedly_site_name'
+        db.delete_column('spreedly_subscription', 'spreedly_site_name')
 
 
     models = {
@@ -92,7 +40,7 @@ class Migration(SchemaMigration):
         },
         'auth.user': {
             'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 22, 14, 53, 37, 780358)'}),
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 22, 14, 55, 38, 332596)'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -100,7 +48,7 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 22, 14, 53, 37, 780259)'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 22, 14, 55, 38, 332467)'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -143,6 +91,7 @@ class Migration(SchemaMigration):
             'return_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'}),
             'speedly_id': ('django.db.models.fields.IntegerField', [], {'primary_key': 'True', 'db_index': 'True'}),
             'speedly_site_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
+            'spreedly_site_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'terms': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'version': ('django.db.models.fields.IntegerField', [], {'default': '1', 'blank': 'True'})
         },
@@ -156,7 +105,9 @@ class Migration(SchemaMigration):
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'lifetime': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'on_trial': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'recurring': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'spreedly_site_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'store_credit': ('django.db.models.fields.DecimalField', [], {'default': "'0'", 'null': 'True', 'max_digits': '8', 'decimal_places': '2'}),
             'token': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'trial_elegible': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

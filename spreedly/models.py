@@ -15,7 +15,6 @@ class PlanManager(models.Manager):
     def enabled(self):
         return self.model.objects.filter(enabled=True, force_recurring=True)
 
-
 class Plan(models.Model):
     '''
     Subscription plan
@@ -46,6 +45,8 @@ class Plan(models.Model):
     
     speedly_id = models.IntegerField(db_index=True, primary_key=True)
     speedly_site_id = models.IntegerField(db_index=True, null=True)
+
+    spreedly_site_name = models.CharField(max_length=255, null=True)
     
     order = models.PositiveIntegerField(null=True)
     
@@ -55,7 +56,7 @@ class Plan(models.Model):
         ordering = ['order', 'price']
     
     def __unicode__(self):
-        return '%s: $%s/%s' % (self.name, self.price, self.terms)
+        return '%s: %s %s/%s' % (self.name, self.currency_code, self.price, self.terms)
     
     def save(self, *args, **kwargs):
         # order the items logically
@@ -108,6 +109,8 @@ class Subscription(models.Model):
         help_text=u'USD', null=True)
     
     objects = SubscriptionManager()
+
+    spreedly_site_name = models.CharField(max_length=255, null=True)
     
     def __unicode__(self):
         return u'Subscription for %s' % self.user
@@ -144,7 +147,7 @@ class Subscription(models.Model):
 
     def subscription_change_url(self):
         return 'https://spreedly.com/%(account_name)s/subscriber_accounts/%(token)s' % {
-            'account_name': settings.SPREEDLY_SITE_NAME,
+            'account_name': self.spreedly_site_name,
             'token': self.token,
         }
 

@@ -15,6 +15,7 @@ from spreedly.models import Plan, Subscription, Gift
 import spreedly.settings as spreedly_settings
 from spreedly.forms import SubscribeForm, GiftRegisterForm, AdminGiftForm
 from spreedly import signals
+from spreedly import sites
 
 def plan_list(request, extra_context=None, **kwargs):
     sub = None

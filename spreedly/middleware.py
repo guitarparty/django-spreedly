@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 
 from spreedly.models import Subscription
 import spreedly.settings as spreedly_settings
+from spreedly import sites
 
 class SpreedlyMiddleware(object):
     '''
@@ -11,6 +12,21 @@ class SpreedlyMiddleware(object):
     subscription.
     '''
     def process_request(self, request):
+        spreedly_site = None
+        if hasattr(request, 'session'):
+            spreedly_site = request.session.get('spreedly_site', None)
+            if spreedly_site in settings.SPREEDLY_SITES.keys() and spreedly_site is not None:
+                request.spreedly_site = spreedly_site
+        else:
+            spreedly_site = request.COOKIES.get('spreedly_site')
+            if spreedly_site in settings.SPREEDLY_SITES.keys() and spreedly_site is not None:
+                request.spreedly_site = spreedly_site
+
+        if spreedly_site is None:
+            request.spreedly_site = sites.DEFAULT_SITE_ALIAS
+
+        print request.spreedly_site
+        
         if spreedly_settings.SPREEDLY_LOCK_TYPE == 'whitelist':
             allowed = False
             for path in spreedly_settings.SPREEDLY_ALLOWED_PATHS + [spreedly_settings.SPREEDLY_URL, settings.LOGIN_URL]:
