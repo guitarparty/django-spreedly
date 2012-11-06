@@ -105,6 +105,7 @@ class Migration(SchemaMigration):
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'lifetime': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'on_trial': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'recurring': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'spreedly_site_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'store_credit': ('django.db.models.fields.DecimalField', [], {'default': "'0'", 'null': 'True', 'max_digits': '8', 'decimal_places': '2'}),
