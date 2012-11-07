@@ -43,7 +43,8 @@ def get_subscription(user, site=DEFAULT_SITE_ALIAS):
         data = client.get_info(user.id)
     
         subscription, created = Subscription.objects.get_or_create(
-            user=user
+            user=user,
+            spreedly_site_name=site['SPREEDLY_SITE_NAME']
         )
         for k, v in data.items():
             if hasattr(subscription, k):
@@ -74,7 +75,8 @@ def get_or_create_subscription(user, site=DEFAULT_SITE_ALIAS):
     data = client.get_or_create_subscriber(user.id, user.username)
     
     subscription, created = Subscription.objects.get_or_create(
-        user=user
+        user=user,
+        spreedly_site_name=site['SPREEDLY_SITE_NAME']
     )
     for k, v in data.items():
         if hasattr(subscription, k):
