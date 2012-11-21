@@ -24,8 +24,6 @@ class SpreedlyMiddleware(object):
 
         if spreedly_site is None:
             request.spreedly_site = sites.DEFAULT_SITE_ALIAS
-
-        print request.spreedly_site
         
         if spreedly_settings.SPREEDLY_LOCK_TYPE == 'whitelist':
             allowed = False
