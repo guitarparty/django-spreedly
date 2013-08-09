@@ -59,14 +59,14 @@ def create_subscription(user, site=DEFAULT_SITE_ALIAS):
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.get_or_create_subscriber(user.id, user.username)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def change_subscription(plan, user, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.change_subscription(user.id, plan.pk)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def get_or_create_subscription(user, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
@@ -111,35 +111,35 @@ def complimentary_time_extension(user, duration_quantity, duration_units, site=D
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.complimentary_time_extension(user.id, duration_quantity, duration_units)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def complimentary_subscription(user, duration_quantity, duration_units, feature_level, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.complimentary_subscription(user.id, duration_quantity, duration_units, feature_level)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def lifetime_complimentary_subscription(user, feature_level, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.lifetime_complimentary_subscription(user.id, feature_level)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def add_store_credit(user, amount, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.add_store_credit(user.id, amount)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def stop_auto_renew(user, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.stop_auto_renew(user.id)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
 
 def return_url(user, plan=None, trial=False, site=DEFAULT_SITE_ALIAS):
     args = [user.id]
@@ -155,7 +155,7 @@ def allow_free_trial(user, site=DEFAULT_SITE_ALIAS):
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
     client.allow_free_trial(user.id)
-    return get_subscription(user)
+    return get_subscription(user, site['SPREEDLY_SITE_NAME'])
 
 def subscription_url(plan, user, return_url, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
