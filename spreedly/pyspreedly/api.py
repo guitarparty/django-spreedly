@@ -9,7 +9,7 @@ API_VERSION = 'v4'
 class Client:
     def __init__(self, token, site_name):
         self.auth = b64encode('%s:x' % token)
-        self.base_host = 'spreedly.com'
+        self.base_host = 'subs.pinpayments.com'
         self.base_path = '/api/%s/%s' % (API_VERSION, site_name)
         self.base_url = 'https://%s%s' % (self.base_host, self.base_path)
         self.url = None
