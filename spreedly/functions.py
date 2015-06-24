@@ -160,7 +160,7 @@ def allow_free_trial(user, site=DEFAULT_SITE_ALIAS):
 def subscription_url(plan, user, return_url, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
-    return 'https://spreedly.com/%(site_name)s/subscribers/%(user_id)s/subscribe/%(plan_id)s/%(user_username)s?email=%(user_email)s&first_name=%(first_name)s&last_name=%(last_name)s' % {
+    return 'https://subs.pinpayments.com/%(site_name)s/subscribers/%(user_id)s/subscribe/%(plan_id)s/%(user_username)s?email=%(user_email)s&first_name=%(first_name)s&last_name=%(last_name)s' % {
         'site_name': plan.spreedly_site_name,
         'plan_id': plan.pk,
         'user_id': user.id,
