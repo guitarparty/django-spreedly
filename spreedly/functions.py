@@ -58,7 +58,7 @@ def create_subscription(user, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
-    client.get_or_create_subscriber(user.id, user.username)
+    client.get_or_create_subscriber(user.id, user.username.encode('utf-8'))
     return get_subscription(user, site['SPREEDLY_SITE_NAME'])
     
 def change_subscription(plan, user, site=DEFAULT_SITE_ALIAS):
@@ -72,7 +72,7 @@ def get_or_create_subscription(user, site=DEFAULT_SITE_ALIAS):
     site=get_site(site)
 
     client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
-    data = client.get_or_create_subscriber(user.id, user.username)
+    data = client.get_or_create_subscriber(user.id, user.username.encode('utf-8'))
     
     subscription, created = Subscription.objects.get_or_create(
         user=user,
@@ -99,7 +99,7 @@ def start_free_trial(plan, user, site=DEFAULT_SITE_ALIAS):
 
     if check_trial_eligibility(plan, user):
         client = Client(site['SPREEDLY_AUTH_TOKEN_SECRET'], site['SPREEDLY_SITE_NAME'])
-        client.get_or_create_subscriber(user.id, user.username)
+        client.get_or_create_subscriber(user.id, user.username.encode('utf-8'))
         client.subscribe(user.id, plan.pk, trial=True)
         get_subscription(user)
         return True
